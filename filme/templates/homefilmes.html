@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+{% load static %}
+
+            {% block titulo %}
+                Home Filmes Hashflix
+            {% endblock %}
+
+        {% block head %}
+            <style>
+                $itemGrow: 1.2;
+                $duration: 250ms;
+
+                html {
+                    scroll-behavior: smooth;
+                }
+
+                body {
+                  margin: 0;
+                  background-color: #000;
+                }
+
+                h1 {
+                  font-family: Arial;
+                  color: red;
+                  text-align: center;
+                }
+
+                .wrapper {
+                  display: grid;
+                  grid-template-columns: repeat(3,100%);
+                  overflow:hidden;
+                  scroll-behavior: smooth;
+
+                  section {
+                    width: 100%;
+                    position: relative;
+                    margin: 20px 0;
+
+                    .item {
+                      padding: 0 2px;
+                      transition: $duration all;
+
+                      &:hover {
+                        margin: 0 40px;
+                        transform: scale(1.2);
+                      }
+
+                    }
+
+                    a {
+                      /* position: absolute; */
+                      color: #fff;
+                      text-decoration: none;
+                      font-size: 6em;
+                      background:rgb(0,0,0);
+                      text-align: center;
+                      z-index: 1;
+                    }
+
+                    &>a:first-child {
+                        position: absolute;
+                        left:0;
+                        background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+                    }
+
+                    &>a:last-child {
+                        position: absolute;
+                        right: 0;
+                        background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+                    }
+                  }
+                }
+
+                // Remove the arrow for Mobile
+                @media only screen and (max-width: 600px) {
+                  a.arrow__btn {
+                    display:none;
+                  }
+                }
+            </style>
+        {% endblock %}
+
+        {% block content %}
+            <main class='bg-primary_black min-h-screen w-full'>
+
+                <!-- primeira sessão - filme em destaque -->
+                <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb.url }}');"> <!-- filme_destaque vem de novos_context.py -->
+                    <div>
+                        <h2 class="text-6xl font-semibold text-white my-4">
+                            {{ filme_destaque.titulo }} <!-- filme_destaque vem de novos_context.py -->
+                        </h2>
+                        <p class=" w-11/12 md:w-5/12 font-medium text-white my-4">
+                            {{ filme_destaque.descricao }} <!-- filme_destaque vem de novos_context.py -->
+                        </p>
+                        <div class="flex my-4">
+                            <a href="{% url 'filme:detalhesfilme' filme_destaque.pk %}"> <!-- filme_destaque vem de novos_context.py -->
+                                <button class="flex items-center bg-white py-2 px-5 rounded-md" style='color:black;'>
+                                    <ion-icon name="play" class="text-2xl"></ion-icon>
+                                    <span class="ml-3 font-medium " >
+                                        Play
+                                    </span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- segunda sessão - filmes novos -->
+                <section class='bg-primary_black flex justify-center py-10'>
+                    <div class="p-8 w-10/12 relative" >
+                        <h2 class="text-gray-200 text-2xl font-medium">
+                            Novos
+                        </h2>
+                        <div class="wrapper">
+
+                          <!-- CARROSSEL -->
+                          <!-- sessão 1 -->
+                          <!--<section id="section1" class="flex flex-nowrap items-center justify-center space-x-8">-->
+                          <section id="section1" class="flex flex-nowrap items-center justify-center">
+                            <a href="#section2" class="arrow__btn text-6xl page">‹</a> <!-- sessão anterior -->
+                              {% for filme in lista_filmes_recentes %} <!-- para cada filme em lista_filmes_recentes -->
+                                {% if forloop.counter < 5 %} <!-- se o contador do for é até 4 filmes, exibe a sessão 1 -->
+                                  <div class="item h-64 w-1/4 m-4">
+                                    <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                      <!-- filme está definido no urls.py principal, como namespace='filme' -->
+                                      <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
+                                      <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
+                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                    </a>
+                                  </div>
+                                {% endif %}
+                              {% endfor %}
+                            <a href="#section2" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                          </section>
+
+                          <!-- sessão 2 -->
+                          {% if lista_filmes_recentes|length > 4 %} <!-- o filtro |length diz o tamanho de uma lista -->
+                            <section id="section2" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section1" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in lista_filmes_recentes %} <!-- para cada filme em lista_filmes_recentes -->
+                                  {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                          <!-- sessão 3 -->
+                          {% if lista_filmes_recentes|length > 8 %} <!-- se o tamanho da lista de filmes recentes for mair que 8 -->
+                            <section id="section3" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section2" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in lista_filmes_recentes %} <!-- para cada filme em lista_filmes_recentes -->
+                                  {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- terceira sessão - filmes em alta -->
+                <section class='bg-primary_black flex justify-center py-10'>
+                    <div class="p-8 w-10/12 relative" >
+                        <h2 class="text-gray-200 text-2xl font-medium">
+                            Em Alta
+                        </h2>
+                        <div class="wrapper">
+
+                          <!-- CARROSSEL -->
+                          <!-- sessão 1 -->
+                          <!--<section id="section1EmAlta" class="flex flex-nowrap items-center justify-center space-x-8">-->
+                          <section id="section1EmAlta" class="flex flex-nowrap items-center justify-center">
+                            <a href="#section2EmAlta" class="arrow__btn text-6xl page">‹</a> <!-- sessão anterior -->
+                              {% for filme in lista_filmes_em_alta %} <!-- para cada filme em lista_filmes_em_alta -->
+                                {% if forloop.counter < 5 %} <!-- se o contador do for é até 4 filmes, exibe a sessão 1 -->
+                                  <div class="item h-64 w-1/4 m-4">
+                                    <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                      <!-- filme está definido no urls.py principal, como namespace='filme' -->
+                                      <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
+                                      <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
+                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                    </a>
+                                  </div>
+                                {% endif %}
+                              {% endfor %}
+                            <a href="#section2EmAlta" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                          </section>
+
+                          <!-- sessão 2 -->
+                          {% if lista_filmes_em_alta|length > 4 %} <!-- o filtro |length diz o tamanho de uma lista -->
+                            <section id="section2EmAlta" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section1EmAlta" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in lista_filmes_em_alta %} <!-- para cada filme em lista_filmes_em_alta -->
+                                  {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1EmAlta" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                          <!-- sessão 3 -->
+                          {% if lista_filmes_em_alta|length > 8 %} <!-- se o tamanho da lista de filmes recentes for mair que 8 -->
+                            <section id="section3EmAlta" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section2EmAlta" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in lista_filmes_em_alta %} <!-- para cada filme em lista_filmes_em_alta -->
+                                  {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1EmAlta" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    {{ request.user.filmes_vistos.all }} <!-- exibe todos os filmes vistos do usuário atual -->
+                </section>
+
+                <!-- quarta sessão - filmes vistos -->
+                <section class='bg-primary_black flex justify-center py-10'>
+                    <div class="p-8 w-10/12 relative" >
+                        <h2 class="text-gray-200 text-2xl font-medium">
+                            Continuar Assistindo
+                        </h2>
+                        <div class="wrapper">
+
+                          <!-- CARROSSEL -->
+                          <!-- sessão 1 -->
+                          <!--<section id="section1vistos" class="flex flex-nowrap items-center justify-center space-x-8">-->
+                          <section id="section1vistos" class="flex flex-nowrap items-center justify-center">
+                            <a href="#section2vistos" class="arrow__btn text-6xl page">‹</a> <!-- sessão anterior -->
+                              {% for filme in request.user.filmes_vistos.all %} <!-- para cada filme em request.user.filmes_vistos.all -->
+                                {% if forloop.counter < 5 %} <!-- se o contador do for é até 4 filmes, exibe a sessão 1 -->
+                                  <div class="item h-64 w-1/4 m-4">
+                                    <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                      <!-- filme está definido no urls.py principal, como namespace='filme' -->
+                                      <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
+                                      <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
+                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                    </a>
+                                  </div>
+                                {% endif %}
+                              {% endfor %}
+                            <a href="#section2vistos" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                          </section>
+
+                          <!-- sessão 2 -->
+                          {% if request.user.filmes_vistos.all|length > 4 %} <!-- o filtro |length diz o tamanho de uma lista -->
+                            <section id="section2vistos" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section1vistos" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in request.user.filmes_vistos.all %} <!-- para cada filme em request.user.filmes_vistos.all -->
+                                  {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1vistos" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                          <!-- sessão 3 -->
+                          {% if request.user.filmes_vistos.all|length > 8 %} <!-- se o tamanho da lista de filmes recentes for mair que 8 -->
+                            <section id="section3vistos" class="flex flex-nowrap items-center justify-center">
+                              <a href="#section2vistos" class="arrow__btn text-6xl">‹</a> <!-- sessão anterior -->
+                                {% for filme in request.user.filmes_vistos.all %} <!-- para cada filme em request.user.filmes_vistos.all -->
+                                  {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
+                                    <div class="item h-64 w-1/4 m-4">
+                                      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      </a>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              <a href="#section1vistos" class="arrow__btn text-6xl">›</a> <!-- próxima sessão -->
+                            </section>
+                          {% endif %}
+
+                        </div>
+                    </div>
+                </section>
+
+
+
+            </main>
+
+            <!-- {{ lista_filmes }} --> <!-- chave 'lista_filmes' do dicionário 'context' -->
+            <!-- {% for filme in lista_filmes %} --> <!-- utilizando função -->
+            <!-- {% endfor %} -->
+
+        {% endblock %}
