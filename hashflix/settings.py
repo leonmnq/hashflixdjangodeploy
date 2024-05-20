@@ -26,15 +26,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # caminho base, onde está lo
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6tmcqb@&zj&n#kt2uh&3*-35v00wr2ky7nt+@yx=$b0s&cj_l8'  # chave de segurança
+#SECRET_KEY = 'django-insecure-6tmcqb@&zj&n#kt2uh&3*-35v00wr2ky7nt+@yx=$b0s&cj_l8'  # chave de segurança
+import os  # configuração para deploy
+
+# CONFIGURAÇÕES PARA DEPLOY
+TOKEN_CSRF = os.getenv('TOKEN_CSRF')
+if TOKEN_CSRF:
+    SECRET_KEY = TOKEN_CSRF
+    CSRF_TRUSTED_ORIGINS = ['https://hashflixdjangodeploy.onrender.com/']  # Para evitar que tentem fazer requisições
+    # por outros domínios.
+else:
+    SECRET_KEY = 'django-insecure-6tmcqb@&zj&n#kt2uh&3*-35v00wr2ky7nt+@yx=$b0s&cj_l8'  # chave de segurança
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # atualiza automaticamente as mudanças do código no site no navegador
 
 
 # configuração para deploy
-ALLOWED_HOSTS = ['*']  # todos os hosts permitidos (quando estiver tudo pronto,
+#ALLOWED_HOSTS = ['*']  # todos os hosts permitidos (quando estiver tudo pronto,
 # colocar a url definitiva dentro das aspas)
+
+ALLOWED_HOSTS = ["https://hashflixdjangodeploy.onrender.com/", "localhost", "127.0.0.1"]
+
 
 
 # Application definition
