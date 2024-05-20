@@ -33,7 +33,7 @@ import os  # configuração para deploy
 TOKEN_CSRF = os.getenv('TOKEN_CSRF')
 if TOKEN_CSRF:
     SECRET_KEY = TOKEN_CSRF
-    CSRF_TRUSTED_ORIGINS = ['https://hashflixdjangodeploy.onrender.com/']  # Para evitar que tentem fazer requisições
+    CSRF_TRUSTED_ORIGINS = ['https://hashflixdjangodeploy.onrender.com']  # Para evitar que tentem fazer requisições
     # por outros domínios.
 else:
     SECRET_KEY = 'django-insecure-6tmcqb@&zj&n#kt2uh&3*-35v00wr2ky7nt+@yx=$b0s&cj_l8'  # chave de segurança
