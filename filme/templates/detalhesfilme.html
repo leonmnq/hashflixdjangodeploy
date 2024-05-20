@@ -9,8 +9,9 @@
             <main class='bg-primary_black min-h-screen w-full'>
 
                 <!-- primeira sessão - o filme em destaque-->
-                <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex  items-end bg-cover" style="background-image: url('{{ object.thumb.url }}');"> <!-- object.thumb.url = thumb de cada filme -->
-                    <div>
+                <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex  items-end bg-cover" style="background-image: url('{{ object.thumb_link }}');"> <!-- object.thumb.url = thumb de cada filme -->
+                <!-- <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex  items-end bg-cover" style="background-image: url('{{ object.thumb.url }}');"> --> <!-- object.thumb.url = thumb de cada filme -->
+                    <div class="bg-gray-800 bg-opacity-50 px-3"> <!-- bg-gray-800 bg-opacity-50 = fundo do texto -->
                         <h2 class="text-6xl font-semibold text-white my-4">
                             {{ object.titulo }} <!-- título de cada filme -->
                         </h2>
@@ -72,8 +73,8 @@
                             {% for filme in filmes_relacionados %}
                                 <div class="m-4 bg-blue-500 overflow-hidden flex-shrink-0 rounded-md cursor-pointer h-64 w-96">
                                     <a href="{% url 'filme:detalhesfilme' filme.pk %}"> <!-- link para página detalhesfilme de cada filme relacionado, passando o id como parâmetro (filme.pk)-->
-                                            <img src="{{ filme.thumb.url }}" class="object-cover w-full h-full " alt=""> <!-- thumb de cada filme relacionado com o filme em destaque -->
-
+                                            <img src="{{ filme.thumb_link }}" class="object-cover w-full h-full " alt=""> <!-- thumb de cada filme relacionado com o filme em destaque -->
+                                            <!-- <img src="{{ filme.thumb.url }}" class="object-cover w-full h-full " alt=""> --> <!-- thumb de cada filme relacionado com o filme em destaque -->
                                     </a>
                                 </div>
 

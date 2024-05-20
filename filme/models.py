@@ -4,20 +4,56 @@ from django.contrib.auth.models import AbstractUser  # necessário fazer essa im
 
 # Create your models here.
 
+# LISTA_CATEGORIAS = (
+#     ("ANALISES", "Análises"),
+#     ("PROGRAMACAO", "Programação"),
+#     ("APRESENTACAO", "Apresentação"),
+#     ("OUTROS", "Outros")
+# )  # Ex: (armazenar_no_banco, aparecer_pro_usuario)
+
 LISTA_CATEGORIAS = (
-    ("ANALISES", "Análises"),
-    ("PROGRAMACAO", "Programação"),
-    ("APRESENTACAO", "Apresentação"),
+    ("ACAO", "Ação"),
+    ("ANIMACAO", "Animação"),
+    ("ANIME", "Anime"),
+    ("AVENTURA", "Aventura"),
+    ("CINEMADAARTE", "Cinema de arte"),
+    ("CHANCHADA", "Chanchada"),
+    ("COMEDIA", "Comédia"),
+    ("COMEDIADEACAO", "Comédia de ação"),
+    ("COMEDIADETERROR", "Comédia de terror"),
+    ("COMEDIADRAMATICA", "Comédia dramática"),
+    ("COMEDIAROMANTICA", "Comédia romântica"),
+    ("DANCA", "Dança"),
+    ("DOCUMENTARIO", "Documentário"),
+    ("DOCUFICCAO", "Docuficção"),
+    ("DRAMA", "Drama"),
+    ("ESPIONAGEM", "Espionagem"),
+    ("FAROESTE", "Faroeste"),
+    ("FANTASIA", "Fantasia"),
+    ("FANTASIACIENTIFICA", "Fantasia científica"),
+    ("FICCAOCIENTIFICA", "Ficção científica"),
+    ("FILMESCOMTRUQUES", "Filmes com truques"),
+    ("FILMESDEGUERRA", "Filmes de guerra"),
+    ("MISTERIO", "Mistério"),
+    ("MUSICAL", "Musical"),
+    ("FILMEPOLICIAL", "Filme policial"),
+    ("ROMANCE", "Romance"),
+    ("SUSPENSE", "Suspense"),
+    ("TERROR", "Terror"),
+    ("THRILLER", "Thriller"),
     ("OUTROS", "Outros")
-)  # Ex: (armazenar_no_banco, aparecer_pro_usuario)
+)
 
 
 # PASSO 3 - criar o filme (passo 3)
-class Filme(models.Model): # Filme é uma subclasse de models.Model
+class Filme(models.Model):  # Filme é uma subclasse de models.Model
     titulo = models.CharField(max_length=100)  # CharField é campo de texto
-    thumb = models.ImageField(upload_to='thumb_filmes')  # a imagem será armazenada dentro da pasta 'thumb_filmes'
+
+    thumb_link = models.URLField(default='')  # minha modificação para salvar endereço online das thumbs, podendo acessar o link online
+
+    #thumb = models.ImageField(upload_to='thumb_filmes')  # a imagem será armazenada dentro da pasta 'thumb_filmes' dentro da pasta 'media'
     descricao = models.TextField(max_length=1000)  # TextField é um bloco para texto
-    categoria = models.CharField(max_length=15, choices=LISTA_CATEGORIAS)  # o usuário escolhe uma das categorias na LISTA_CATEGORIAS
+    categoria = models.CharField(max_length=30, choices=LISTA_CATEGORIAS)  # o usuário escolhe uma das categorias na LISTA_CATEGORIAS
     visualizacoes = models.IntegerField(default=0)
     data_criacao = models.DateTimeField(default=timezone.now)  # '.now' sem os parênteses para registrar a hora de criação e não a hora de visualização
 

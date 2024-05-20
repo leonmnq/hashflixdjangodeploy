@@ -134,9 +134,16 @@ DATABASES = {
     )
 }
 '''
+''' DESCOMENTAR PARA MIGRAÇÃO MANUAL E CRIAÇÃO DE ADMINISTRADOR MANUAL'''
 # DATABASES = {
 #     "default": dj_database_url.parse(
-#         "postgres://db_hashflixdjangorender_40kb_user:rG4kILzgFhvvkUYqHXiGVVPFpvPn015d@dpg-cp578mocmk4c73etshdg-a.oregon-postgres.render.com/db_hashflixdjangorender_40kb"
+#         "postgres://db_hashflixdjangodeploy_309h_user:Xv8Ce97ClE4d07L6atPFyeoc9qapk1Uh@dpg-cp5onuicn0vc73birbvg-a.oregon-postgres.render.com/db_hashflixdjangodeploy_309h"
+#     )
+# }
+''' OU '''
+# DATABASES = {
+#     "default": dj_database_url.parse(
+#         "EXTERNAL_DATABASE_URL"
 #     )
 # }
 ########################################################################################################################

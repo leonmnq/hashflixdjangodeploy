@@ -84,8 +84,9 @@
             <main class='bg-primary_black min-h-screen w-full'>
 
                 <!-- primeira sessão - filme em destaque -->
-                <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb.url }}');"> <!-- filme_destaque vem de novos_context.py -->
-                    <div>
+                <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb_link }}');"> <!-- filme_destaque vem de novos_context.py --> <!-- para mostrar a imagem pelo link da thumb online (minha alteração) -->
+                <!-- <section class="h-screen relative bg-no-repeat pb-8 pl-6 flex items-end bg-cover" style="background-image: url('{{ filme_destaque.thumb.url }}');"> --> <!-- filme_destaque vem de novos_context.py -->
+                    <div class="bg-gray-800 bg-opacity-50 px-3">
                         <h2 class="text-6xl font-semibold text-white my-4">
                             {{ filme_destaque.titulo }} <!-- filme_destaque vem de novos_context.py -->
                         </h2>
@@ -125,7 +126,9 @@
                                       <!-- filme está definido no urls.py principal, como namespace='filme' -->
                                       <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
                                       <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
-                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+
+                                      <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover"> <!-- para mostrar a imagem pelo link da thumb online (minha alteração) -->
+                                      <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                     </a>
                                   </div>
                                 {% endif %}
@@ -141,7 +144,9 @@
                                   {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover"> <!-- para mostrar a imagem pelo link da thumb online (minha alteração) -->
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
@@ -158,7 +163,8 @@
                                   {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
@@ -192,7 +198,8 @@
                                       <!-- filme está definido no urls.py principal, como namespace='filme' -->
                                       <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
                                       <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
-                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                      <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                     </a>
                                   </div>
                                 {% endif %}
@@ -208,7 +215,8 @@
                                   {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
@@ -225,7 +233,8 @@
                                   {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
@@ -262,7 +271,8 @@
                                       <!-- filme está definido no urls.py principal, como namespace='filme' -->
                                       <!-- detalhesfilme está definido no urls.py do app filme, como name:detalhesfilme -->
                                       <!-- filme.id ou filme.pk é o parâmetro que passamos para detalhesfilme -->
-                                      <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                      <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                      <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                     </a>
                                   </div>
                                 {% endif %}
@@ -278,7 +288,8 @@
                                   {% if forloop.counter > 4 %} <!-- se o contador do for é maior que 4 filmes, exibe a sessão 2 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
@@ -295,7 +306,8 @@
                                   {% if forloop.counter > 8 %} <!-- se o contador do for é maior que 8 filmes, exibe a sessão 3 -->
                                     <div class="item h-64 w-1/4 m-4">
                                       <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-                                        <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover">
+                                        <img src="{{ filme.thumb_link }}" class="rounded-md w-full h-full object-cover">
+                                        <!-- <img src="{{ filme.thumb.url }}" class="rounded-md w-full h-full object-cover"> --> <!-- para mostrar a imagem salva na pasta de thumbs -->
                                       </a>
                                     </div>
                                   {% endif %}
