@@ -47,7 +47,7 @@ DEBUG = True  # atualiza automaticamente as mudanças do código no site no nave
 #ALLOWED_HOSTS = ['*']  # todos os hosts permitidos (quando estiver tudo pronto,
 # colocar a url definitiva dentro das aspas)
 
-ALLOWED_HOSTS = ["https://hashflixdjangodeploy.onrender.com/", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["hashflixdjangodeploy.onrender.com", "localhost", "127.0.0.1"]
 
 
 
